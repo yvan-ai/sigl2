@@ -1,0 +1,129 @@
+/* src/components/VerticalNavbar.css */
+
+.vertical-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    transition: width 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    box-sizing: border-box;
+    z-index: 1000;
+  }
+  
+  .vertical-navbar.closed {
+    width: 60px;
+  }
+  
+  .vertical-toggle-button {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    align-self: flex-end;
+    margin-right: 10px;
+  }
+  
+  .vertical-profile-section {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  
+  .vertical-profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .vertical-profile-section h3 {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .vertical-nav-links {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .vertical-nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 15px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    box-sizing: border-box;
+  }
+  
+  .vertical-nav-link:hover {
+    background-color: #34495e;
+  }
+  
+  .vertical-icon {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  .profile-button {
+    background: none;
+    border: none;
+    color: inherit;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px 20px;
+    box-sizing: border-box;
+  }
+  
+  .profile-button:hover {
+    background-color: #34495e;
+  }
+  
+  .vertical-signout-section {
+    width: 100%;
+    padding-bottom: 20px;
+  }
+  
+
+  
+  /* Masquer les textes quand la navbar est fermée */
+  .vertical-navbar.closed .vertical-profile-section h3,
+  .vertical-navbar.closed .vertical-nav-link span {
+    display: none;
+  }
+  
+  .vertical-navbar.closed .vertical-nav-link {
+    justify-content: center;
+  }
+  
+  .vertical-navbar.closed .vertical-icon {
+    margin-right: 0;
+  }
+  
+  /* Styliser les boutons pour ressembler à des liens */
+  .vertical-nav-link button {
+    background: none;
+    border: none;
+    color: inherit;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  

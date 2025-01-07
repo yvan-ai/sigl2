@@ -1,0 +1,251 @@
+.upload-form-container {
+    display: flex;
+    width: 100%;
+    min-width: 200px; /* Assure une largeur minimum sur petits écrans */
+    margin: auto;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    background-color: aliceblue;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    background-color: #007f39;
+    color: white;
+    padding: 20px;
+    min-width: 200px;
+    width: 30%;
+    text-align: left;
+    border-radius: 10px 0 0 10px;
+    box-sizing: border-box;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+}
+
+.sidebar nav a {
+    display: block;
+    color: white;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.form-section {
+    padding: 20px;
+    width: 70%;
+    flex-basis: 70%;
+    box-sizing: border-box;
+    border-radius: 0 10px 10px 0;
+}
+
+.form-section h2 {
+    font-size: 20px;
+    color: #7f39fb;
+    margin-bottom: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+}
+
+.upload-form label {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.upload-form input[type="text"],
+.upload-form input[type="file"],
+.upload-form select,
+.upload-form textarea {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.upload-form button {
+    margin-top: 20px;
+    background-color: #007f39;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%; /* S'étendra à la largeur complète sur petits écrans */
+}
+
+.upload-form button:hover {
+    background-color: #00632e;
+}
+
+.message {
+    margin-top: 20px;
+    font-weight: bold;
+    color: green;
+}
+
+/* Petits écrans (mobiles) */
+@media (max-width: 768px) {
+    .upload-form-container {
+        flex-direction: column;
+    }
+
+    .sidebar, .form-section {
+        border-radius: 10px; /* Coins arrondis pour chaque section */
+        flex-basis: 100%;
+        min-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-section {
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .sidebar h1 {
+        font-size: 20px;
+    }
+
+    .upload-form button {
+        width: auto; /* Pour éviter que le bouton prenne toute la largeur sur les écrans moyens */
+    }
+}
+
+/* Très petits écrans (mobiles en portrait) */
+@media (max-width: 480px) {
+    .sidebar, .form-section {
+        padding: 10px;
+       
+    }
+
+    .form-section h2 {
+        font-size: 18px;
+    }
+
+    .sidebar nav a {
+        font-size: 14px;
+    }
+
+    .upload-form button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .text-depot {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .custom-file-upload {
+        font-size: 30px;
+    }
+}
+
+.text-depot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #7f39fb; /* Couleur de fond violette */
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 25px; /* Bords arrondis pour donner un effet de bouton */
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.text-depot .icon {
+    margin-left: 8px; /* Espace entre le texte et l'icône */
+    font-size: 18px; /* Taille de l'icône */
+}
+
+/* Style du conteneur */
+.upload-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 150px; /* Ajustez la hauteur comme souhaité */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: white;
+    position: relative;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* Masquer l'input de fichier original */
+#file-upload {
+    display: none;
+}
+
+/* Style de l'icône "+" */
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #d3d3d3;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.custom-file-upload:hover {
+    color: #bbb;
+}
+
+/* Optionnel : Texte de label pour une meilleure accessibilité */
+.custom-file-upload::after {
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 14px;
+    color: #3a3a3a;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Ajustez la largeur si nécessaire */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000; /* Choisissez la couleur du texte */
+    padding: 0 10px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}

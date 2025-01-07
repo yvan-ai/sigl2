@@ -1,0 +1,265 @@
+/* src/frontend/styles/Apprenti.css */
+.apprenti-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}
+
+.apprenti-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-left {
+  color: black;
+}
+
+.nav-left h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.nav-left p {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.nav-right i {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #fff;
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-image:url(../images/profil.jpg);  /*Mettez à jour avec l'URL de votre image */
+  background-size: cover;
+  margin-bottom: 20px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav li {
+  color: #52a1bd;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.sidebar nav li:first-child {
+  color: #3a69ff; /* Couleur différente pour Accueil */
+}
+
+.footer-links {
+  margin-top: auto;
+}
+
+.footer-links p {
+  color: black;
+  cursor: pointer;
+}
+
+.main-content {
+  margin-left: 220px;
+  padding: 20px;
+  margin-top: 60px; /* Laisser de la place pour la barre de navigation */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.event-card {
+  flex: 1;
+  min-width: 250px;
+  height: 150px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.event-card.active {
+  background-image: url(../images/profil.jpg);
+}
+
+.event-card.inactive {
+  background-image: url(../images/profil.jpg);
+}
+
+.tickpoint {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.tickpoint.active {
+  background-color: green;
+}
+
+.tickpoint.inactive {
+  background-color: gray;
+}
+
+.calendar-section {
+  margin-top: 20px;
+}
+
+.journal-section {
+  background-color: #f8f9fa; /* Couleur de fond */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: auto; /* Pousse le journal à droite */
+  width: 300px; /* Ajustez la largeur selon vos besoins */
+  position: absolute; /* Position absolue pour le placer */
+  bottom: 20px; /* Distance du bas */
+  right: 20px; /* Distance de la droite */
+}
+
+.journal-section h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.journal-icon {
+  width: 50px;
+  height: 50px;
+  background-image: url(../images/profil.jpg);
+  background-size: cover;
+  margin: 10px auto;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-consult, .btn-new-doc {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+.btn-consult {
+  background: linear-gradient(90deg, #4CAF50, #3b8d3b); /* Dégradé vert */
+}
+
+.btn-new-doc {
+  background: linear-gradient(90deg, #9b59b6, #8e44ad); /* Dégradé violet */
+}
+
+/* Pour tablettes */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .event-card {
+    min-width: 200px;
+  }
+  
+  .journal-section {
+    width: 100%;
+    position: static;
+    margin: 20px 0;
+  }
+}
+
+/* Pour mobile */
+@media screen and (max-width: 480px) {
+  .top-nav {
+    padding: 10px;
+  }
+  
+  .nav-left h1 {
+    font-size: 16px;
+  }
+  
+  .nav-left p {
+    font-size: 12px;
+  }
+  
+  .nav-right i {
+    margin-left: 10px;
+  }
+  
+  .event-card {
+    min-width: 100%;
+    height: 120px;
+  }
+  
+  .calendar-section {
+    overflow-x: auto;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn-consult, .btn-new-doc {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

@@ -1,0 +1,91 @@
+/* src/components/ApprenticeList.css */
+
+.apprentice-list-container {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .apprentice-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-button {
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background-color: #27ae60;
+  }
+  
+  .apprentice-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .apprentice-table th, .apprentice-table td {
+    border: 1px solid #bdc3c7;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .apprentice-table th {
+    background-color: #ecf0f1;
+  }
+  
+  .apprentice-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .name-button {
+    background: none;
+    border: none;
+    color: #2980b9;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: underline;
+  }
+  
+  .name-button:hover {
+    color: #1abc9c;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .form-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-buttons button[type="submit"] {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .form-buttons button[type="submit"]:hover {
+    background-color: #2980b9;
+  }
+  
+  .form-buttons button[type="button"] {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .form-buttons button[type="button"]:hover {
+    background-color: #c0392b;
+  }
+  

@@ -1,0 +1,5 @@
+/* src/components/CalendarStyles.css */
+.unavailable {
+    background-color: blue !important; /* Les dates indisponibles en bleu */
+    color: white !important;
+}

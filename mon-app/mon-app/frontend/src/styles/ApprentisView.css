@@ -1,0 +1,81 @@
+/* src/components/ApprentisView.css */
+
+.apprentis-container {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .apprentis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-button {
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background-color: #27ae60;
+  }
+  
+  .apprentis-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .apprentis-table th, .apprentis-table td {
+    border: 1px solid #bdc3c7;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .apprentis-table th {
+    background-color: #ecf0f1;
+  }
+  
+  .promotion-name-button {
+    background: none;
+    border: none;
+    color: #2980b9;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: underline;
+  }
+  
+  .promotion-name-button:hover {
+    color: #1abc9c;
+  }
+  
+  .edit-button, .delete-button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-button {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .edit-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .delete-button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #c0392b;
+  }
+  

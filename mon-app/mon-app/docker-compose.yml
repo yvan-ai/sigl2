@@ -1,0 +1,61 @@
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    command: >
+      sh -c "./wait-for-it.sh db:5432 -- python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+
+  sonarqube:
+    image: sonarqube:latest
+    environment:
+      - SONARQUBE_WEB_HOST=0.0.0.0
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/${DB_NAME}  # Fixed hostname
+      - SONARQUBE_JDBC_USERNAME=${DB_USER}
+      - SONARQUBE_JDBC_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "9000:9000"
+
+
+volumes:
+  postgres_data:
+  media_volume:
