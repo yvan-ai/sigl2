@@ -8,6 +8,7 @@ import Carousel from '../components/Carousel';
 import { Link } from 'react-router-dom';
 
 import VerticalNavbar from '../components/VerticalNavbar';
+import EventForm from '../components/EventForm';
 
 
 const Apprenti = () => {

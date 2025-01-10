@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'entreprise',
     'coordinatrice',
     'evenement',
+    'notifications',
 
 ]
 

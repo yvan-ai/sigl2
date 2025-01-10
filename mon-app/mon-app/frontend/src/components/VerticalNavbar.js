@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import profilImage from '../images/profil.jpg';
 import ProfilePage from './ProfilePage';
 import { useNavigate } from 'react-router-dom'; 
+import Notifications from '../pages/notification';
 
 
 
@@ -43,6 +44,9 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
   const handleProfileClick = () => {
     navigate('/profile-views');  // Redirection vers /profile
   };
+  const handleNotificationClick = () => {
+    navigate('/notifications');  // Redirection vers /notifications
+  };
   
 
   return (
@@ -66,7 +70,7 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
           <FaUser className="vertical-icon" />
           {isOpen && <span>Profil</span>}
         </button>
-        <a href="#" className="vertical-nav-link">
+        <a href="/notifications" className="vertical-nav-link">
           <FaBell className="vertical-icon" />
           {isOpen && <span>Notifications</span>}
         </a>

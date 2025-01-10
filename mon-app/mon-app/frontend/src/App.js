@@ -16,11 +16,9 @@ import AdminDashboard  from './pages/AdminDashboard';
 import Apprenti from './pages/Apprenti';
 import DocumentList from './pages/DocumentList';
 import ProfilePage from './components/ProfilePage';
-
-
-
-
+import EventForm from './components/EventForm';
 import { logout } from './services/api';
+import Notifications from './pages/notification';
 
 
 const App = () => {
@@ -119,8 +117,8 @@ const App = () => {
         <Route path="/upload" element={<UploadForm />} />
         <Route path="/journal-views" element={<DocumentList />} />
         <Route path="/profile-views" element={<ProfilePage />} />
-
-
+        <Route path="/event-form" element={<EventForm />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route
           path="/dashboard"
           element={
