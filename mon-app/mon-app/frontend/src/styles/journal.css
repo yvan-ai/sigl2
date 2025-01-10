@@ -1,0 +1,125 @@
+.tp-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.tp-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation supérieure */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-right {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  margin-bottom: 2rem;
+}
+
+/* Contenu principal */
+.main-content {
+  margin-left: 250px;
+  padding: 2rem;
+  background-color: #f5f5f5;
+  flex: 1;
+}
+
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.document-section {
+  padding: 2rem;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.document-section.purple { background-color: #f0e6ff; }
+.document-section.yellow { background-color: #fff9e6; }
+.document-section.pink { background-color: #ffe6e6; }
+.document-section.green { background-color: #e6ffe6; }
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.document-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.document-icon {
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-modifier, .btn-consulter {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-modifier {
+  background-color: #ff4444;
+  color: white;
+}
+
+.btn-consulter {
+  background-color: #44ff44;
+  color: white;
+}
+
+.btn-modifier:hover, .btn-consulter:hover {
+  opacity: 0.8;
+}
+
+.see-all {
+  color: #666;
+  border: none;
+  background: none;
+  cursor: pointer;
+} 

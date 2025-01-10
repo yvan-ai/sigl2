@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import *
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from .views import UserProfileView
 
 urlpatterns = [
        # Route pour récupérer la liste des apprentis d'un maître d'apprentissage
@@ -26,4 +26,7 @@ urlpatterns = [
     path('GroupesAutoCompletionView/', GroupesAutoCompletionView.as_view(), name='search-groupe'),
     path('SemestresAutoCompletionView/', SemestresAutoCompletionView.as_view(), name='search-semestre'),
     path('authPage/', authPage, name='authPage'),
+    path('api/user/profile/', UserProfileView.as_view(), name='user-profile'),
+    path('api/documents/<str:type>/', DocumentListView.as_view(), name='document-list'),
+    path('api/documents/<int:document_id>/noter/', DocumentNoteView.as_view(), name='noter-document'),
          ]

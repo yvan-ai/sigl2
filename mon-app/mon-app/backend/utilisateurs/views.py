@@ -8,7 +8,9 @@ from .serializers import *
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.contrib.auth.decorators import login_required
 ######################################################
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -226,7 +228,67 @@ class SemestresAutoCompletionView(APIView):
         return Response([], status=status.HTTP_200_OK)
     
 
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        data = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+            "is_responsable_cursus":user.is_responsable_cursus,
+            "is_superuser":user.is_superuser,
+            "is_staff":user.is_staff,
+            "user_type": user.get_user_type_display(),  # Retourne la valeur descriptive du type d'utilisateur
+        }
+        return JsonResponse(data)
+
+
+
+###########################
+class DocumentListView(APIView):
+    def get(self, request, type, format=None):
+        # Récupère l'id du journal de formation de l'apprenti connecté
+        apprenti = request.user.apprenti_profile
+        
+        # Récupère les documents associés à ce journal
+        documents = []
+        if type == 'rapport_final':
+            documents = RapportFinal.objects.filter(journaldeformation__apprenti=apprenti)
+        elif type == 'rapport_ping':
+            documents = RapportPING.objects.filter(journaldeformation__apprenti=apprenti)
+        elif type == 'presentation':
+            documents = Presentation.objects.filter(journaldeformation__apprenti=apprenti)
+        elif type == 'synthese':
+            documents = FicheSynthese.objects.filter(journaldeformation__apprenti=apprenti)
+
+        # Sérialisation des documents
+        if type == 'rapport_final':
+            serializer = RapportFinalSerializer(documents, many=True)
+        elif type == 'rapport_ping':
+            serializer = RapportPINGSerializer(documents, many=True)
+        elif type == 'presentation':
+            serializer = PresentationSerializer(documents, many=True)
+        elif type == 'synthese':
+            serializer = FicheSyntheseSerializer(documents, many=True)
+
+        return Response(serializer.data)
+
+class DocumentNoteView(APIView):
+    def post(self, request, document_id, format=None):
+        # Récupère le document et met à jour la note et les commentaires
+        
+        commentaires = request.data.get('commentaires')
+        
+        # Trouver le document spécifique (à adapter selon le type)
+        try:
+            document = RapportFinal.objects.get(id=document_id)  # Exemple pour RapportFinal
+            document.commentaire = commentaires
+            document.save()
+            return Response({"message": "Note et commentaire ajoutés"}, status=status.HTTP_200_OK)
+        except RapportFinal.DoesNotExist:
+            return Response({"error": "Document non trouvé"}, status=status.HTTP_404_NOT_FOUND)
 
 
 

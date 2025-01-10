@@ -14,6 +14,8 @@ import CoordinatorDashboard  from './pages/CoordinatorDashboard';
 import EntrepriseDashboard  from './pages/EntrepriseDashboard';
 import AdminDashboard  from './pages/AdminDashboard';
 import Apprenti from './pages/Apprenti';
+import DocumentList from './pages/DocumentList';
+import ProfilePage from './components/ProfilePage';
 
 
 
@@ -115,6 +117,8 @@ const App = () => {
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/ApprentiDashboard" element={<Apprenti />} />
         <Route path="/upload" element={<UploadForm />} />
+        <Route path="/journal-views" element={<DocumentList />} />
+        <Route path="/profile-views" element={<ProfilePage />} />
 
 
         <Route

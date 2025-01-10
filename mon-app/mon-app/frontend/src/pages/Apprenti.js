@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Apprenti.css'; // Chemin corrigé vers Apprenti.css  
 import CustomCalendar from '../components/Calendar'; // Assurez-vous que le chemin est correct
 import axios from 'axios';
-import EventForm from '../components/EventForm';
+
 import Carousel from '../components/Carousel';
 import { Link } from 'react-router-dom';
 
@@ -24,24 +24,7 @@ const Apprenti = () => {
   // eslint-disable-next-line no-unused-vars
   const [calendarDates, setCalendarDates] = useState([]);
 
-  useEffect(() => {
-    const fetchApprentiData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/apprentis/me/');
-        setApprentiData(response.data);
-        
-        const eventsResponse = await axios.get('http://localhost:8000/api/apprenti/events/');
-        setEvents(eventsResponse.data);
-        
-        const calendarResponse = await axios.get('http://localhost:8000/api/apprenti/calendar/');
-        setCalendarDates(calendarResponse.data);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
-      }
-    };
 
-    fetchApprentiData();
-  }, []);
 
   return (
     <div className="apprenti-container">
@@ -67,11 +50,12 @@ const Apprenti = () => {
             <h2>Journal de formation</h2>
             <div className="journal-icon"></div> {/* Image représentant un journal */}
             <div className="action-buttons">
-            
+            <Link to="/journal-views">
               <button className="btn-consult">
                 Consulter
-              </button>
+              </button></Link>
               <Link to="/upload">
+              
               <button className="btn-new-doc">Nouveau doc</button></Link>
             </div>
           </section>
