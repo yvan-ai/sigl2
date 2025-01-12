@@ -21,6 +21,7 @@ import { logout } from './services/api';
 import Notifications from './pages/notification';
 
 
+
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [userType, setUserType] = useState(localStorage.getItem('userType'));

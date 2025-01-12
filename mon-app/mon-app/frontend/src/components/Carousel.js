@@ -32,10 +32,10 @@ function Carousel() {
         setEvents(data);
         // Initialiser l'état des rappels pour chaque événement
         const initialReminderStates = {};
-        data.forEach((event) => {
-          initialReminderStates[event.id] = false; // Par défaut, désactivé
-        });
-        setReminderStates(initialReminderStates);
+            data.forEach((event) => {
+            initialReminderStates[event.id] = event.reminder; // Utilise la valeur envoyée par le backend
+        });setReminderStates(initialReminderStates);
+
       })
       .catch((error) => setError(error.message));
   }, []);
@@ -49,10 +49,27 @@ function Carousel() {
   };
 
   const toggleReminder = (eventId) => {
-    setReminderStates((prevStates) => ({
-      ...prevStates,
-      [eventId]: !prevStates[eventId],
-    }));
+    const token = localStorage.getItem("token");
+    fetch(`http://127.0.0.1:8000/notifications/events/${eventId}/toggle-reminder/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur lors de la mise à jour du rappel.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Mettre à jour l'état du rappel en fonction de la réponse du backend
+        setReminderStates((prevStates) => ({
+          ...prevStates,
+          [eventId]: data.reminder, // Utiliser l'état du rappel retourné par le backend
+        }));
+      })
+      .catch((error) => console.error(error));
   };
 
   if (error) {

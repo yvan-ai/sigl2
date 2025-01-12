@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import VerticalNavbar from '../components/VerticalNavbar';
 import EventForm from '../components/EventForm';
+import JournalDeFormationForm from '../components/CreateJournauxForm';
 
 
 const Apprenti = () => {
@@ -34,8 +35,8 @@ const Apprenti = () => {
       
 
         {/* Menu latéral gauche */}
-        <VerticalNavbar />
-
+        < JournalDeFormationForm/>
+        <VerticalNavbar/>
         {/* Contenu principal */}
         <main className="main-content">
           <section className="event-section">

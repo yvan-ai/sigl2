@@ -132,7 +132,8 @@ class JournalDeFormationCreationSerializer(serializers.Serializer):
             journal = JournalDeFormation.objects.create(groupe_id=groupe_id, semestre_id=semestre_id)
             
             # Associer le journal à l'apprenti
-            apprenti.numero_journal.add(journal)  # Utilisation de .add() pour ajouter un journal
+            apprenti.numero_journal = journal  # Assigner directement le journal
+            apprenti.save()
 
         return apprentis
 

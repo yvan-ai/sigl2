@@ -108,12 +108,12 @@ class Apprenti(models.Model):
     user = models.OneToOneField(Utilisateur, on_delete=models.CASCADE, related_name='apprenti_profile')
     date_naissance = models.DateField(null=True)
     telephone = models.CharField(max_length=20, blank=True)
-    tuteur_pedagogique = models.ForeignKey('TuteurPedagogique', blank=True, null=True, on_delete=models.SET_NULL)
-    numero_journal = models.ManyToManyField(JournalDeFormation, blank=True,null=True) 
-    groupe = models.ForeignKey('Groupe', blank=True, null=True, on_delete=models.SET_NULL)
-    maitre_apprentissage = models.ForeignKey('MaitreApprentissage', blank=True, null=True, on_delete=models.SET_NULL)
-    coordinatrice_apprentissage = models.ForeignKey('CoordinatriceApprentissage', blank=True, null=True, on_delete=models.SET_NULL)
-    entreprise_apprenti = models.ForeignKey('Entreprise', blank=True, on_delete=models.SET_NULL, null=True)
+    tuteur_pedagogique = models.ForeignKey(TuteurPedagogique, blank=True, null=True, on_delete=models.SET_NULL)
+    numero_journal = models.ForeignKey(JournalDeFormation, blank=True,null=True, on_delete=models.SET_NULL) 
+    groupe = models.ForeignKey(Groupe, blank=True, null=True, on_delete=models.SET_NULL)
+    maitre_apprentissage = models.ForeignKey(MaitreApprentissage, blank=True, null=True, on_delete=models.SET_NULL)
+    coordinatrice_apprentissage = models.ForeignKey(CoordinatriceApprentissage, blank=True, null=True, on_delete=models.SET_NULL)
+    entreprise_apprenti = models.ForeignKey(Entreprise, blank=True, on_delete=models.SET_NULL, null=True)
 
 
 class RapportFinal(models.Model):
@@ -188,6 +188,7 @@ class Event(models.Model):
     intitulé = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(max_length=10000, null=True, blank=True)
     image = models.ImageField(upload_to="event_image/", null=True, blank=True)
+    
     def __str__(self):
         return self.intitulé or "Event"
     
@@ -197,6 +198,9 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # Date de création
     read = models.BooleanField(default=False)  # Statut de lecture
     type = models.CharField(max_length=50, default='general')  # Type de notification, ex: 'alert', 'message', 'reminder'
+    scheduled_date = models.DateField(null=True, blank=True)  # Date de rappel
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)  # Événement associé
+    reminder = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Notification pour {self.user.username} - {self.message[:20]}..."
