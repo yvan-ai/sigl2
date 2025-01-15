@@ -7,7 +7,7 @@ import axios from 'axios';
 import Carousel from '../components/Carousel';
 import { Link } from 'react-router-dom';
 
-import VerticalNavbar from '../components/VerticalNavbar';
+import VerticalNavbarApprenti from '../components/VerticalNavbarApprenti';
 import EventForm from '../components/EventForm';
 import JournalDeFormationForm from '../components/CreateJournauxForm';
 
@@ -35,8 +35,8 @@ const Apprenti = () => {
       
 
         {/* Menu latéral gauche */}
-        < JournalDeFormationForm/>
-        <VerticalNavbar/>
+        
+        <VerticalNavbarApprenti/>
         {/* Contenu principal */}
         <main className="main-content">
           <section className="event-section">

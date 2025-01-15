@@ -10,7 +10,7 @@ import Notifications from '../pages/notification';
 
 
 
-const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via props
+const VerticalNavbarApprenti = ({ onProfileClick }) => { // Recevoir la fonction via props
   const [isOpen, setIsOpen] = useState(true);
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
@@ -95,6 +95,10 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
           <FaBook className="vertical-icon" />
           {isOpen && <span>Ressources</span>}
         </a>
+        <a href="/entretiens" className="vertical-nav-link">
+          <FaBook className="vertical-icon" />
+          {isOpen && <span>Entretiens</span>}
+        </a>
       </nav>
       <div className="vertical-signout-section">
         <button 
@@ -109,4 +113,4 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
   );
 };
 
-export default VerticalNavbar;
+export default VerticalNavbarApprenti;
