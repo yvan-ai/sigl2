@@ -16,6 +16,29 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.conf import settings
+import logging
+
+class IsApprenti:
+    """Permission pour vérifier si l'utilisateur est un apprenti."""
+    def has_permission(self, request, view):
+        return request.user.user_type == 2
+
+
+def send_notification(subject, message, recipient_email):
+    """
+    Envoie une notification par email.
+    """
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [recipient_email],
+        fail_silently=False,
+    )
+
+
+logger = logging.getLogger(__name__)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -67,22 +90,24 @@ class EncadrantViewSet(viewsets.ViewSet):
             email = request.query_params.get('email')
             
             if not email:
-                return Response({'error': 'Le paramètre email est requis'}, status=400)
+                return Response({'error': 'Le paramètre email est requis'}, status=status.HTTP_400_BAD_REQUEST)
 
             encadrant = get_object_or_404(Utilisateur, email=email)
             
             if encadrant.user_type == 5:  # Maître d'apprentissage
-                apprentis = Apprenti.objects.filter(maitre_apprentissage=encadrant, user_type=2)
+                maitre = get_object_or_404(MaitreApprentissage, user=encadrant)
+                apprentis = Apprenti.objects.filter(maitre_apprentissage=maitre)
             elif encadrant.user_type == 3:  # Tuteur pédagogique
-                apprentis = Apprenti.objects.filter(tuteur_pedagogique=encadrant, user_type=2)
+                tuteur = get_object_or_404(TuteurPedagogique, user=encadrant)
+                apprentis = Apprenti.objects.filter(tuteur_pedagogique=tuteur)
             else:
-                return Response({'error': 'Type d\'utilisateur non autorisé'}, status=403)
+                return Response({'error': 'Type d\'utilisateur non autorisé'}, status=status.HTTP_403_FORBIDDEN)
             
             serializer = ApprentiBriefSerializer(apprentis, many=True)
             return Response(serializer.data)
             
         except Exception as e:
-            return Response({'error': f'Erreur lors de la récupération des apprentis: {str(e)}'}, status=400)
+            return Response({'error': f'Erreur lors de la récupération des apprentis: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def journal(self, request, pk=None):
@@ -93,26 +118,27 @@ class EncadrantViewSet(viewsets.ViewSet):
             email = request.query_params.get('email')
             
             if not email:
-                return Response({'error': 'Le paramètre email est requis'}, status=400)
+                return Response({'error': 'Le paramètre email est requis'}, status=status.HTTP_400_BAD_REQUEST)
 
             encadrant = get_object_or_404(Utilisateur, email=email)
             
             if encadrant.user_type == 5:  # Maître d'apprentissage
-                apprenti = get_object_or_404(Apprenti, id=pk, maitre_apprentissage=encadrant, user_type=2)
+                maitre = get_object_or_404(MaitreApprentissage, user=encadrant)
+                apprenti = get_object_or_404(Apprenti, id=pk, maitre_apprentissage=maitre)
             elif encadrant.user_type == 3:  # Tuteur pédagogique
-                apprenti = get_object_or_404(Apprenti, id=pk, tuteur_pedagogique=encadrant, user_type=2)
+                tuteur = get_object_or_404(TuteurPedagogique, user=encadrant)
+                apprenti = get_object_or_404(Apprenti, id=pk, tuteur_pedagogique=tuteur)
             else:
-                return Response({'error': 'Type d\'utilisateur non autorisé'}, status=403)
+                return Response({'error': 'Type d\'utilisateur non autorisé'}, status=status.HTTP_403_FORBIDDEN)
             
             if not apprenti.numero_journal:
-                return Response({'error': 'Aucun journal trouvé pour cet apprenti'}, status=404)
+                return Response({'error': 'Aucun journal trouvé pour cet apprenti'}, status=status.HTTP_404_NOT_FOUND)
                 
             serializer = JournalFormationSerializer(apprenti.numero_journal)
             return Response(serializer.data)
             
         except Exception as e:
-            return Response({'error': f'Erreur lors de la récupération du journal: {str(e)}'}, status=400)
-
+            return Response({'error': f'Erreur lors de la récupération du journal: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
     
 class DocumentEditViewSet(viewsets.ViewSet):
@@ -125,19 +151,20 @@ class DocumentEditViewSet(viewsets.ViewSet):
             document_type = request.data.get('document_type')
             comment = request.data.get('comment')
 
-            if not document_type:
-                return Response({'error': 'Le paramètre document_type est requis'}, status=400)
+            logger.info(f"Received update_document request: document_type={document_type}, comment={comment}")
 
-            # Utilisez request.user pour obtenir l'utilisateur authentifié
+            if not document_type:
+                return Response({'error': 'Le paramètre document_type est requis'}, status=status.HTTP_400_BAD_REQUEST)
+
             encadrant = request.user
             apprenti = get_object_or_404(Apprenti, id=pk)
 
             if not self._has_permission(encadrant, apprenti):
-                return Response({'error': 'Accès interdit'}, status=403)
+                return Response({'error': 'Accès interdit'}, status=status.HTTP_403_FORBIDDEN)
 
             document_model = self._get_document_model(document_type)
             if not document_model:
-                return Response({'error': 'Type de document inconnu'}, status=400)
+                return Response({'error': f'Type de document inconnu: {document_type}'}, status=status.HTTP_400_BAD_REQUEST)
 
             document = get_object_or_404(document_model, numero=apprenti.numero_journal)
             
@@ -145,37 +172,40 @@ class DocumentEditViewSet(viewsets.ViewSet):
             document.save()
 
             serializer_class = self._get_serializer_class(document_type)
+            if not serializer_class:
+                return Response({'error': f'Serializer non trouvé pour le type: {document_type}'}, status=status.HTTP_400_BAD_REQUEST)
+            
             serializer = serializer_class(document)
             return Response(serializer.data)
 
         except Exception as e:
-            return Response({'error': f'Erreur lors de l\'édition du document: {str(e)}'}, status=400)
+            logger.error(f"Error in update_document: {str(e)}")
+            return Response({'error': f'Erreur lors de l\'édition du document: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
     def _has_permission(self, encadrant, apprenti):
-        print(f"Encadrant type: {encadrant.user_type}")
-        print(f"Apprenti maitre_apprentissage: {apprenti.maitre_apprentissage}")
-        print(f"Apprenti tuteur_pedagogique: {apprenti.tuteur_pedagogique}")
-        if encadrant.user_type == 5:  # Maître d'apprentissage
-            return True
-        elif encadrant.user_type == 3:  # Tuteur pédagogique
-            return True
-        return False
+        logger.info(f"Checking permission: Encadrant type={encadrant.user_type}, "
+                    f"Apprenti maitre_apprentissage={apprenti.maitre_apprentissage_id}, "
+                    f"Apprenti tuteur_pedagogique={apprenti.tuteur_pedagogique_id}")
+        return encadrant.user_type in [3, 5]  # Tuteur pédagogique ou Maître d'apprentissage
 
     def _get_document_model(self, document_type):
-        return {
-            'rapport_final': RapportFinal,
-            'rapport_ping': RapportPING,
-            'presentation': Presentation,
-            'fiche_synthese': FicheSynthese
-        }.get(document_type)
+        document_types = {
+            'RapportFinal': RapportFinal,
+            'RapportPING': RapportPING,
+            'Presentation': Presentation,
+            'FicheSynthese': FicheSynthese
+        }
+        return document_types.get(document_type)
 
     def _get_serializer_class(self, document_type):
-        return {
-            'rapport_final': RapportFinalSerializer,
-            'rapport_ping': RapportPINGSerializer,
-            'presentation': PresentationSerializer,
-            'fiche_synthese': FicheSyntheseSerializer
-        }.get(document_type)
+        serializer_classes = {
+            'RapportFinal': RapportFinalSerializer,
+            'RapportPING': RapportPINGSerializer,
+            'Presentation': PresentationSerializer,
+            'FicheSynthese': FicheSyntheseSerializer
+        }
+        return serializer_classes.get(document_type)
+
     
 
 class AddUserView(APIView):

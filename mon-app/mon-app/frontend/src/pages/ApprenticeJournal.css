@@ -212,3 +212,140 @@
     padding-bottom: 2rem;
   }
   
+
+
+  .app-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .content-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .journal-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .journal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .documents-section {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 20px;
+  }
+  
+  .documents-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 16px;
+  }
+  
+  .document-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .document-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .document-icon {
+    width: 24px;
+    height: 24px;
+    color: #3b82f6;
+    margin-right: 12px;
+  }
+  
+  .document-type {
+    font-weight: 500;
+    color: #1f2937;
+  }
+  
+  .document-date {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .document-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .comment-input {
+    padding: 4px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+  }
+  
+  .save-button, .edit-button {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .save-button {
+    background-color: #10b981;
+    color: white;
+  }
+  
+  .edit-button {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .download-button {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: #e0f2fe;
+    color: #3b82f6;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .download-button:hover {
+    background-color: #bfdbfe;
+  }
+  
+  .download-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+  
+  .loading, .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.125rem;
+    color: #4b5563;
+  }
+  
+  .error {
+    color: #ef4444;
+  }
+  

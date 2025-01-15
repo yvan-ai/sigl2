@@ -10,13 +10,30 @@ import Notifications from '../pages/notification';
 
 
 
-const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via props
+const VerticalNavbarEncadreur = ({ onProfileClick }) => { // Recevoir la fonction via props
   const [isOpen, setIsOpen] = useState(true);
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
   
   // Récupération du token dans le Local Storage
   const token = localStorage.getItem("token");
+
+ 
+
+  // Fonction pour récupérer les données de l'utilisateur connecté
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/utilisateurs/api/user/profile/', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserData(response.data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du profil utilisateur:', error);
+    }
+  };
+
   const handleLogout = () => {
     try {
       // Supprimer toutes les données d'authentification
@@ -35,21 +52,6 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
       console.error('Erreur lors de la déconnexion:', error);
     }
   };
- 
-
-  // Fonction pour récupérer les données de l'utilisateur connecté
-  const fetchUserProfile = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/utilisateurs/api/user/profile/', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserData(response.data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération du profil utilisateur:', error);
-    }
-  };
 
   // Charger les données utilisateur au chargement du composant
   useEffect(() => {
@@ -64,6 +66,10 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
   const handleNotificationClick = () => {
     navigate('/notifications');  // Redirection vers /notifications
   };
+  const handleApprenticeClick = () => {
+    navigate('/apprentices-list');  // Ajout de cette fonction pour rediriger vers ApprenticesList
+  };
+
   
 
   return (
@@ -91,14 +97,10 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
           <FaBell className="vertical-icon" />
           {isOpen && <span>Notifications</span>}
         </a>
-        <a href="#" className="vertical-nav-link">
+        <button className="vertical-nav-link profile-button" onClick={handleApprenticeClick}>
           <FaBook className="vertical-icon" />
-          {isOpen && <span>Ressources</span>}
-        </a>
-        <a href="/entretiens" className="vertical-nav-link">
-          <FaBook className="vertical-icon" />
-          {isOpen && <span>Entretiens</span>}
-        </a>
+          {isOpen && <span>Apprenti</span>}
+        </button>
       </nav>
       <div className="vertical-signout-section">
         <button 
@@ -113,4 +115,4 @@ const VerticalNavbar = ({ onProfileClick }) => { // Recevoir la fonction via pro
   );
 };
 
-export default VerticalNavbar;
+export default VerticalNavbarEncadreur;
